@@ -1,7 +1,5 @@
 package it.musichub.skill;
 
-import java.util.UUID;
-
 import com.amazon.ask.Skill;
 import com.amazon.ask.SkillStreamHandler;
 import com.amazon.ask.Skills;
@@ -32,33 +30,33 @@ public class MusicHubStreamHandler extends SkillStreamHandler {
 
     public MusicHubStreamHandler() {
         super(getSkill());
-        instance = this;
-        uniqueID = UUID.randomUUID();
-        staticUniqueID = UUID.randomUUID();
+//        instance = this;
+//        uniqueID = UUID.randomUUID();
+//        staticUniqueID = UUID.randomUUID();
     }
     
     
     
     
-    private static MusicHubStreamHandler instance = null;
+//    private static MusicHubStreamHandler instance = null;
+//    
+//	public synchronized static MusicHubStreamHandler getInstance() {
+//		if (instance == null)
+//			instance = new MusicHubStreamHandler(); 
+//			
+//		return instance;
+//	}
     
-	public synchronized static MusicHubStreamHandler getInstance() {
-		if (instance == null)
-			instance = new MusicHubStreamHandler(); 
-			
-		return instance;
-	}
-    
-    private UUID uniqueID = null;
-    private static UUID staticUniqueID = null;
-
-	public UUID getUniqueID() {
-		return uniqueID;
-	}
-	
-	public static UUID getStaticUniqueID() {
-		return staticUniqueID;
-	}
-	
+//    private UUID uniqueID = null;
+//    private static UUID staticUniqueID = null;
+//
+//	public UUID getUniqueID() {
+//		return uniqueID;
+//	}
+//	
+//	public static UUID getStaticUniqueID() {
+//		return staticUniqueID;
+//	}
+//	
 
 }

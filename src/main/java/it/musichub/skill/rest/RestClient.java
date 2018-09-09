@@ -1,6 +1,11 @@
 package it.musichub.skill.rest;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.Map;
+
 import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 
@@ -9,27 +14,51 @@ import com.amazon.ask.model.services.ApiClientRequest;
 import com.amazon.ask.model.services.ApiClientResponse;
 import com.amazon.ask.services.ApacheHttpApiClient;
 
+import it.musichub.skill.rest.ex.ConnectionException;
+import it.musichub.skill.rest.ex.RestClientException;
+
 public class RestClient {
-
-
+	
+	private static final int TIMEOUT = 6; //seconds
     private static final String TEST_URI = "http://sigitm.synology.me:8080/";
     
-    public static ApiClientResponse invokeEndpoint(String method, String route) throws Exception {
-        ApiClientRequest request = generateRequest(method, TEST_URI+route);
+    
+    
+    public static ApiClientResponse invokeEndpoint(String method, String route, Map<String, Object> params) throws RestClientException {
+    	String baseUrl = TEST_URI+route;
+    	URI uri;
+		try {
+			uri = new URI(baseUrl);
+		} catch (URISyntaxException e) {
+			throw new RestClientException("Invalid endpoint uri: "+baseUrl, e);
+		}
+    	URIBuilder ub = new URIBuilder(uri);
+    	if (params != null){
+	    	for (String key : params.keySet()) {
+	    		String value = params.get(key) != null ? params.get(key).toString() : null;
+	        	ub.addParameter(key, value);
+	    	}
+    	}
+    	String url = ub.toString();
+    	
+    	
+        ApiClientRequest request = generateRequest(method, url);
 
-        int timeout = 6; //seconds
         RequestConfig config = RequestConfig.custom()
-          .setConnectTimeout(timeout * 1000)
-          .setConnectionRequestTimeout(timeout * 1000)
-          .setSocketTimeout(timeout * 1000).build();
+          .setConnectTimeout(TIMEOUT * 1000)
+          .setConnectionRequestTimeout(TIMEOUT * 1000)
+          .setSocketTimeout(TIMEOUT * 1000).build();
         CloseableHttpClient apacheClient = 
           HttpClientBuilder.create().setDefaultRequestConfig(config).build();
         
         ApiClient client = ApacheHttpApiClient.custom().withHttpClient(apacheClient).build();
 
-        ApiClientResponse response = client.invoke(request);
-        
-        return response;
+        try{
+        	ApiClientResponse response = client.invoke(request);
+        	return response;
+        } catch (Exception e){
+        	throw new ConnectionException("Error connecting to url "+url, e);
+        }
     }
     
     
