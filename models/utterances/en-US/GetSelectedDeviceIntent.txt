@@ -1,0 +1,4 @@
+# http://www.makermusings.com/amazon-echo-utterance-expander/
+(What/Which) is the selected device?
+Tell me the selected device
+Where are you playing?

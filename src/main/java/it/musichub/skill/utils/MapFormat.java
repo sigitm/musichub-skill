@@ -1,4 +1,4 @@
-package it.musichub.skill.model;
+package it.musichub.skill.utils;
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *

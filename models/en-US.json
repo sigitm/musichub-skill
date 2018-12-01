@@ -5,7 +5,9 @@
             "intents": [
                 {
                     "name": "AMAZON.HelpIntent",
-                    "samples": []
+                    "samples": [
+                        "test"
+                    ]
                 },
                 {
                     "name": "AMAZON.StopIntent",
@@ -14,6 +16,16 @@
                 {
                     "name": "AMAZON.CancelIntent",
                     "samples": []
+                },
+                {
+                    "name": "GetSelectedDeviceIntent",
+                    "slots": [],
+                    "samples": [
+                        "What is the selected device",
+                        "Which is the selected device",
+                        "Where are you playing",
+                        "Tell me the selected device"
+                    ]
                 }
             ],
             "types": []
